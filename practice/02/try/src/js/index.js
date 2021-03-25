@@ -2,9 +2,9 @@
   "use strict";
 
   // getElementByを使用したDOM取得
-  const button = document.getElementById("button")
-  const textType = document.getElementsByClassName("text--type")[0]    // <-- 配列として取得される
-  const textClass = document.getElementsByClassName("text--class")[0]  // <-- 配列として取得される
+  const button = document.getElementById("button");
+  const textType = document.getElementsByClassName("text--type")[0]; // <-- 配列として取得される
+  const textClass = document.getElementsByClassName("text--class")[0]; // <-- 配列として取得される
 
   /*
   ** querySelectorを使用したDOM取得 **
@@ -15,7 +15,7 @@
   */
 
   button.addEventListener("click", () => {
-    textType.textContent = button.getAttribute('data-type')
-    textClass.textContent = button.getAttribute('class')
+    textType.textContent = button.getAttribute("data-type");
+    textClass.textContent = button.getAttribute("class");
   });
 })();
