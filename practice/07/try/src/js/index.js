@@ -1,25 +1,38 @@
 (function () {
-  'use strict';
+  "use strict";
 
-  const form = document.getElementById("form")
-  const error = document.getElementById("error")
+  const form = document.getElementById("form");
+  const error = document.getElementById("error");
+
+  const formObject = {
+    name: form.name,
+    mail: form.mail,
+    gender: form.gender,
+    age: form.age,
+    term: form.term
+  };
+
+  // Objectを配列に変換
+  // [["name", input], ["mail", input], ["gender", RadioNodeList(3)] ...]
+  const formArray = Object.entries(formObject);
 
   const isValid = () => {
-    if (form.name === "") return false
-    if (form.mail === "") return false
-    if (form.gender === "") return false
-    if (form.age === "") return false
-    if (!form.term.checked) return false
-    return true
-  }
+    Array.prototype.filter.call(formArray, ([_, el]) => {
+      if (el.type === "checkbox") {
+        return el.checked === false;
+      } else {
+        return el.value === "";
+      }
+    }).length === 0;
+  };
 
-  form.addEventListener('submit', event => {
+  form.addEventListener("submit", event => {
     event.preventDefault();
 
     if (isValid()) {
       event.currentTarget.submit();
     } else {
-      error.classList.add('is-active')
+      error.classList.add("is-active");
     }
-  })
-})()
+  });
+})();
