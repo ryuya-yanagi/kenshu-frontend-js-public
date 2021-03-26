@@ -7,8 +7,8 @@
   const next = document.getElementsByClassName("next")[0];
 
   // Transition後の処理を行ったフラグ
-  let prevAfterTransitionEnd = false;
-  let nextAfterTransitionEnd = false;
+  let prevAfterTransitionEnd = true;
+  let nextAfterTransitionEnd = true;
 
   const listElementWidth = listElement.clientWidth;
   const itemElementWidth = itemElements[0].clientWidth;
@@ -18,7 +18,15 @@
 
   next.addEventListener("click", () => {
     addTransitionClass();
-    listElement.style.marginLeft = `-${itemElementWidth}px`;
+
+    if (isSlideActionNow()) {
+      // スライダーが既に動作している時
+      listElement.style.marginLeft = "0px";
+    } else {
+      // スライダーが停止している時
+      listElement.style.marginLeft = `-${itemElementWidth}px`;
+    }
+
     nextAfterTransitionEnd = false;
 
     listElement.addEventListener("transitionend", () => {
@@ -32,7 +40,15 @@
 
   prev.addEventListener("click", () => {
     addTransitionClass();
-    listElement.style.marginLeft = `${itemElementWidth}px`;
+
+    if (isSlideActionNow()) {
+      // スライダーが既に動作している時
+      listElement.style.marginLeft = "0px";
+    } else {
+      // スライダーが停止している時
+      listElement.style.marginLeft = `${itemElementWidth}px`;
+    }
+
     prevAfterTransitionEnd = false;
 
     listElement.addEventListener("transitionend", () => {
@@ -56,6 +72,12 @@
     listElement.classList.remove("is-transition");
   }
 
+  // スライダーが動作中かを返す関数
+  // 動作中: true, 停止中: false
+  function isSlideActionNow() {
+    return listElement.style.marginLeft !== "0px";
+  }
+
   function insertBeforeListItem() {
     const clonedItems = Array.from(
       listElement.cloneNode(true).getElementsByClassName("item")
@@ -66,5 +88,6 @@
     });
 
     listElement.style.left = `-${listElementWidth}px`;
+    listElement.style.marginLeft = "0px";
   }
 })();
