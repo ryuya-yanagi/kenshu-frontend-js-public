@@ -17,13 +17,15 @@
   const formArray = Object.entries(formObject);
 
   const isValid = () => {
-    Array.prototype.filter.call(formArray, ([_, el]) => {
-      if (el.type === "checkbox") {
-        return el.checked === false;
-      } else {
-        return el.value === "";
-      }
-    }).length === 0;
+    return (
+      Array.prototype.filter.call(formArray, ([_, el]) => {
+        if (el.type === "checkbox") {
+          return el.checked === false;
+        } else {
+          return el.value === "";
+        }
+      }).length === 0
+    );
   };
 
   form.addEventListener("submit", event => {
