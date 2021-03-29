@@ -21,6 +21,9 @@
 
     if (isSlideActionNow()) {
       // スライダーが既に動作している時
+      // もし、Nextアクション中の場合、returnをし何もしない
+      if (!nextAfterTransitionEnd) return;
+
       listElement.style.marginLeft = "0px";
     } else {
       // スライダーが停止している時
@@ -43,6 +46,9 @@
 
     if (isSlideActionNow()) {
       // スライダーが既に動作している時
+      // もし、Prevスライド中の場合、returnをし何もしない
+      if (!prevAfterTransitionEnd) return;
+
       listElement.style.marginLeft = "0px";
     } else {
       // スライダーが停止している時
@@ -75,7 +81,7 @@
   // スライダーが動作中かを返す関数
   // 動作中: true, 停止中: false
   function isSlideActionNow() {
-    return listElement.style.marginLeft !== "0px";
+    return !(prevAfterTransitionEnd && nextAfterTransitionEnd);
   }
 
   function insertBeforeListItem() {
